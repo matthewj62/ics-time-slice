@@ -1,0 +1,14 @@
+{
+  "name": "ics-time-slice",
+  "version": "0.1.0",
+  "description": "Stream-filter VEVENTs out of an .ics file by date range without loading the whole calendar into memory",
+  "type": "module",
+  "bin": {
+    "ics-time-slice": "./src/cli.ts"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "license": "MIT",
+  "private": true
+}
