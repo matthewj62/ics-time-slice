@@ -54,9 +54,15 @@ size of a single event, not the size of the file.
 
 ## Known limitations (this is a first pass)
 
-- Recurring events (`RRULE`) are matched only on their first occurrence's
-  `DTSTART`. A weekly meeting that started last year and recurs into your
-  requested range will be dropped.
+- Recurring events (`RRULE`) are matched by walking occurrences forward
+  from `DTSTART` for `FREQ=DAILY|WEEKLY|MONTHLY|YEARLY` with `INTERVAL`,
+  `COUNT`, and `UNTIL`. A matching event is emitted once, as written, not
+  exploded into one copy per occurrence. Rules with a `BYDAY`,
+  `BYMONTHDAY`, `BYMONTH`, `BYYEARDAY`, `BYWEEKNO`, `BYSETPOS`, `BYHOUR`,
+  `BYMINUTE`, or `BYSECOND` part fall back to matching the bare `DTSTART`
+  only, since expanding those correctly needs more than interval
+  stepping. `EXDATE` is not consulted, so an excluded occurrence can still
+  cause an event to match.
 - `TZID`-qualified and floating (timezone-less) times are treated as UTC.
   `VTIMEZONE` blocks are passed through but not consulted.
 - Output lines are not re-folded, so a single property line can exceed the
